@@ -15,9 +15,7 @@ import type { State } from '~/state';
 export const StateCtx = createContextId<State>('state-ctx');
 
 const IndexPage = component$(() => {
-  const store = useStore(initState, {
-    deep: false,
-  });
+  const store = useStore(initState);
   useContextProvider(StateCtx, store);
 
   useTask$(({ track }) => {

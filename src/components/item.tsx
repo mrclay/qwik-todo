@@ -46,12 +46,9 @@ export const Item = component$<ItemProps>(({ todo }) => {
           }}
           onKeyUp$={(e) => {
             if (e.key === 'Enter') {
-              store.items = store.items.map(({ id, label, completed }) => ({
-                id,
-                label: id === todo.id ? editLabel.value : label,
-                completed,
-              }));
-              editing.value = false;
+              store.setLabel(todo, editLabel.value).then(() => {
+                editing.value = false;
+              });
             }
             if (e.key === 'Escape') {
               editing.value = false;
@@ -63,13 +60,7 @@ export const Item = component$<ItemProps>(({ todo }) => {
           <input
             class="toggle"
             type="checkbox"
-            onClick$={() => {
-              store.items = store.items.map(({ id, label, completed }) => ({
-                id,
-                label,
-                completed: id === todo.id ? !completed : completed,
-              }));
-            }}
+            onClick$={() => store.toggle(todo)}
             checked={todo.completed}
           />
           <label
@@ -83,9 +74,7 @@ export const Item = component$<ItemProps>(({ todo }) => {
           <button
             type="button"
             class="destroy"
-            onClick$={() => {
-              store.items = store.items.filter((item) => item.id !== todo.id);
-            }}
+            onClick$={() => store.destroy(todo)}
           />
         </div>
       )}
