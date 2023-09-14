@@ -4,15 +4,15 @@ import {
   useContextProvider,
   createContextId,
   useTask$,
-} from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
-import { Header } from "~/components/header";
-import { Main } from "~/components/main";
-import { Footer } from "~/components/footer";
-import { initState } from "~/state";
-import type { State } from "~/state";
+} from '@builder.io/qwik';
+import type { DocumentHead } from '@builder.io/qwik-city';
+import { Header } from '~/components/header';
+import { Main } from '~/components/main';
+import { Footer } from '~/components/footer';
+import { initState } from '~/state';
+import type { State } from '~/state';
 
-export const StateCtx = createContextId<State>("state-ctx");
+export const StateCtx = createContextId<State>('state-ctx');
 
 const IndexPage = component$(() => {
   const store = useStore(initState, {
@@ -22,7 +22,7 @@ const IndexPage = component$(() => {
 
   useTask$(({ track }) => {
     track(() => store.items);
-    console.log("items updated:", store.items);
+    console.log('items updated:', store.items);
   });
 
   return (
@@ -37,6 +37,6 @@ const IndexPage = component$(() => {
 export default IndexPage;
 
 export const head: DocumentHead = {
-  title: "TODO Application",
+  title: 'TODO Application',
   meta: [],
 };

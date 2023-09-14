@@ -3,9 +3,9 @@ import {
   useContext,
   useSignal,
   useVisibleTask$,
-} from "@builder.io/qwik";
-import type { Todo } from "~/state";
-import { StateCtx } from "~/routes";
+} from '@builder.io/qwik';
+import type { Todo } from '~/state';
+import { StateCtx } from '~/routes';
 
 interface ItemProps {
   todo: Todo;
@@ -14,7 +14,7 @@ interface ItemProps {
 export const Item = component$<ItemProps>(({ todo }) => {
   const store = useContext(StateCtx);
   const editing = useSignal(false);
-  const editLabel = useSignal("");
+  const editLabel = useSignal('');
 
   useVisibleTask$(({ track }) => {
     const isEditing = track(() => editing.value);
@@ -31,8 +31,8 @@ export const Item = component$<ItemProps>(({ todo }) => {
 
   return (
     <li
-      class={`${todo.completed ? "completed" : ""} ${
-        editing.value ? "editing" : ""
+      class={`${todo.completed ? 'completed' : ''} ${
+        editing.value ? 'editing' : ''
       }`}
     >
       {editing.value ? (
@@ -45,7 +45,7 @@ export const Item = component$<ItemProps>(({ todo }) => {
             editLabel.value = e.target.value;
           }}
           onKeyUp$={(e) => {
-            if (e.key === "Enter") {
+            if (e.key === 'Enter') {
               store.items = store.items.map(({ id, label, completed }) => ({
                 id,
                 label: id === todo.id ? editLabel.value : label,
@@ -53,7 +53,7 @@ export const Item = component$<ItemProps>(({ todo }) => {
               }));
               editing.value = false;
             }
-            if (e.key === "Escape") {
+            if (e.key === 'Escape') {
               editing.value = false;
             }
           }}

@@ -1,4 +1,4 @@
-import * as fs from "node:fs";
+import * as fs from 'node:fs';
 
 // Creates embed-friendly dist/fragment.html
 export default function vitePluginQwikFragment() {
@@ -13,23 +13,23 @@ export default function vitePluginQwikFragment() {
           return;
         }
 
-        const markup = fs.readFileSync("dist/index.html").toString();
+        const markup = fs.readFileSync('dist/index.html').toString();
         const { documentFragment } = extractQwikMarkup(markup);
-        fs.writeFileSync("dist/fragment.html", documentFragment);
+        fs.writeFileSync('dist/fragment.html', documentFragment);
       },
     },
   };
 }
 
 function extractQwikMarkup(markup) {
-  let styles = "";
+  let styles = '';
   let htmlAttrs = {};
-  let body = "";
-  let bootScripts = "";
+  let body = '';
+  let bootScripts = '';
 
   markup.replace(/<html ([^>]+)>/, (m0, m1) => {
     m1.replace(/(q[^= ]+)(="([^"]*)")?/g, (m0, m1, m2, m3) => {
-      htmlAttrs[m1] = m3 ? m3 : "";
+      htmlAttrs[m1] = m3 ? m3 : '';
     });
   });
 
@@ -55,15 +55,20 @@ function extractQwikMarkup(markup) {
         }
       })();
     </script>
-  `.replace(/\n    /g, '\n').trim();
+  `
+    .replace(/\n    /g, '\n')
+    .trim();
 
   return {
     parts: {
+      // Script to add qwik attributes to html element
       addHtmlAttrsScript,
       styles,
       body,
-      bootScripts
+      bootScripts,
     },
-    documentFragment: [addHtmlAttrsScript, styles, body, bootScripts].join("\n")
+    documentFragment: [addHtmlAttrsScript, styles, body, bootScripts].join(
+      '\n'
+    ),
   };
 }

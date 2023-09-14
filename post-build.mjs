@@ -1,14 +1,14 @@
-import fs from "node:fs";
+import fs from 'node:fs';
 
 function extractQwikMarkup(markup) {
-  let styles = "";
+  let styles = '';
   let htmlAttrs = {};
-  let body = "";
-  let bootScripts = "";
+  let body = '';
+  let bootScripts = '';
 
   markup.replace(/<html ([^>]+)>/, (m0, m1) => {
     m1.replace(/(q[^= ]+)(="([^"]*)")?/g, (m0, m1, m2, m3) => {
-      htmlAttrs[m1] = m3 ? m3 : "";
+      htmlAttrs[m1] = m3 ? m3 : '';
     });
   });
 
@@ -33,21 +33,25 @@ function extractQwikMarkup(markup) {
           html.setAttribute(k, v);
         }
       })();
-    </script>`.replaceAll('\n    ', '\n').trim();
+    </script>`
+    .replaceAll('\n    ', '\n')
+    .trim();
 
   return {
     parts: {
       addHtmlAttrsScript,
       styles,
       body,
-      bootScripts
+      bootScripts,
     },
-    documentFragment: [addHtmlAttrsScript, styles, body, bootScripts].join("\n")
+    documentFragment: [addHtmlAttrsScript, styles, body, bootScripts].join(
+      '\n'
+    ),
   };
 }
 
-const qwikMarkup = fs.readFileSync("dist/index.html").toString();
+const qwikMarkup = fs.readFileSync('dist/index.html').toString();
 
 const { documentFragment } = extractQwikMarkup(qwikMarkup);
 
-fs.writeFileSync("dist/fragment.html", documentFragment);
+fs.writeFileSync('dist/fragment.html', documentFragment);

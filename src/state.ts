@@ -1,4 +1,4 @@
-export const allFilters = ["all", "active", "completed"] as const;
+export const allFilters = ['all', 'active', 'completed'] as const;
 
 export interface Todo {
   id: string;
@@ -15,5 +15,5 @@ export interface State {
 export const initState: State = {
   nextId: 1,
   items: [],
-  filter: "all",
+  filter: 'all',
 };

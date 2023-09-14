@@ -1,6 +1,6 @@
-import { component$, useContext } from "@builder.io/qwik";
-import { Item } from "~/components/item";
-import { StateCtx } from "~/routes";
+import { component$, useContext } from '@builder.io/qwik';
+import { Item } from '~/components/item';
+import { StateCtx } from '~/routes';
 
 export const Main = component$(() => {
   const store = useContext(StateCtx);
@@ -10,10 +10,10 @@ export const Main = component$(() => {
       <ul class="todo-list">
         {store.items
           .filter((item) => {
-            if (store.filter === "all") {
+            if (store.filter === 'all') {
               return true;
             }
-            return store.filter === "completed"
+            return store.filter === 'completed'
               ? item.completed
               : !item.completed;
           })
