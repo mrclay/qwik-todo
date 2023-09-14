@@ -1,6 +1,18 @@
+/**
+ * Creates embed-friendly dist/fragment.html
+ *
+ * Install qwik: `npm create qwik@latest`
+ * Configure static: https://qwik.builder.io/docs/guides/static-site-generation/#static-site-generation-config
+ * In adapters/static/vite.config.ts place vitePluginQwikFragment() after the staticAdapter.
+ * Build: `npm run build`
+ *   The file `dist/fragment.html` will be created.
+ * To test: `npx serve dist` and open http://localhost:3000/fragment.html
+ *
+ * @link https://gist.github.com/mrclay/5e0f8e3f30f546023f87a047b09d6ee8
+ */
+
 import * as fs from 'node:fs';
 
-// Creates embed-friendly dist/fragment.html
 export default function vitePluginQwikFragment() {
   return {
     name: 'vite-plugin-qwik-fragment',
