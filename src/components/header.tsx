@@ -19,8 +19,8 @@ export const Header = component$(() => {
         class="new-todo"
         placeholder="What needs to be done?"
         value={label.value}
-        onChange$={(e) => {
-          label.value = e.target.value;
+        onChange$={(_, currentTarget) => {
+          label.value = currentTarget.value;
         }}
         onKeyUp$={(e) => {
           if (e.key === 'Enter') {

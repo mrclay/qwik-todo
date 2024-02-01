@@ -16,6 +16,7 @@ export const Item = component$<ItemProps>(({ todo }) => {
   const editing = useSignal(false);
   const editLabel = useSignal('');
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     const isEditing = track(() => editing.value);
 
@@ -41,8 +42,8 @@ export const Item = component$<ItemProps>(({ todo }) => {
           class="edit"
           type="text"
           value={editLabel.value}
-          onChange$={(e) => {
-            editLabel.value = e.target.value;
+          onChange$={(_, currentTarget) => {
+            editLabel.value = currentTarget.value;
           }}
           onKeyUp$={(e) => {
             if (e.key === 'Enter') {
