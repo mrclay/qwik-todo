@@ -1,44 +1,36 @@
-import type { QRL } from '@builder.io/qwik';
-import { $ } from '@builder.io/qwik';
+import { availableInstruments, SoundFont } from "~/players";
 
-export const allFilters = ['all', 'active', 'completed'] as const;
+// const SPEED_KEY = "CC-speed";
 
-export interface Todo {
-  id: string;
-  label: string;
-  completed: boolean;
+export interface PlayerSpec {
+  sf: SoundFont;
+  name: string;
 }
 
-export interface State {
-  nextId: number;
-  items: Todo[];
-  filter: (typeof allFilters)[number];
-
-  // Actions
-  toggle: QRL<(this: State, todo: Todo) => void>;
-  destroy: QRL<(this: State, todo: Todo) => void>;
-  setLabel: QRL<(this: State, todo: Todo, newLabel: string) => void>;
-}
-
-export const initState: State = {
-  nextId: 1,
-  items: [],
-  filter: 'all',
-
-  // Actions
-  toggle: $(function (todo: Todo) {
-    const el = this.items.find((el) => el === todo);
-    if (el) {
-      el.completed = !el.completed;
-    }
-  }),
-  destroy: $(function (todo) {
-    this.items = this.items.filter((item) => item !== todo);
-  }),
-  setLabel: $(function (todo, newLabel) {
-    const el = this.items.find((el) => el === todo);
-    if (el) {
-      el.label = newLabel;
-    }
-  }),
+export const pianoSpec: PlayerSpec = {
+  sf: SoundFont.TonePiano,
+  name: availableInstruments[SoundFont.TonePiano]![0],
 };
+
+export function playerSpecFromUrl(): PlayerSpec | undefined {
+  const params = new URLSearchParams(window.location.search);
+  const [sf, name] = (params.get("sf") || ".").split(".");
+
+  const available = availableInstruments[sf as SoundFont];
+  if (available && available.includes(name)) {
+    return { sf: sf as SoundFont, name };
+  }
+}
+
+export const initState = {
+  playerLoading: false,
+  //recorder: new Recorder({ piano: defaultPiano }),
+  chordSet: {} as object,
+  song: "",
+  //songChords: undefined as ReactNode | undefined,
+  offset: 0,
+  playerSpec: playerSpecFromUrl() || pianoSpec,
+  pianoSpeed: 100, //atomWithStorage(SPEED_KEY, 100),
+};
+
+export type State = typeof initState;

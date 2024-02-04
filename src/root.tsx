@@ -1,12 +1,16 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, createContextId, useContextProvider, useStore } from "@builder.io/qwik";
 import {
   QwikCityProvider,
   RouterOutlet,
   ServiceWorkerRegister,
 } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
+import type { State } from "~/state";
+import { initState } from "~/state";
 
 import './index.css';
+
+export const CTX = createContextId<State>("all");
 
 export default component$(() => {
   /**
@@ -15,6 +19,9 @@ export default component$(() => {
    *
    * Dont remove the `<head>` and `<body>` elements.
    */
+
+  const state = useStore(initState);
+  useContextProvider(CTX, state);
 
   return (
     <QwikCityProvider>

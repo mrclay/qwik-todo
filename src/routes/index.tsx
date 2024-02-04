@@ -1,40 +1,23 @@
 import {
   component$,
-  useStore,
-  useContextProvider,
-  createContextId,
-  useTask$,
-} from '@builder.io/qwik';
+  useVisibleTask$
+} from "@builder.io/qwik";
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { Header } from '~/components/header';
-import { Main } from '~/components/main';
-import { Footer } from '~/components/footer';
-import { initState } from '~/state';
-import type { State } from '~/state';
-
-export const StateCtx = createContextId<State>('state-ctx');
 
 const IndexPage = component$(() => {
-  const store = useStore(initState);
-  useContextProvider(StateCtx, store);
-
-  useTask$(({ track }) => {
-    track(() => store.items);
-    console.log('items updated:', store.items);
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(() => {
+    location.href = '/chord/';
   });
 
   return (
-    <>
-      <Header />
-      <Main />
-      <Footer />
-    </>
+    <div />
   );
 });
 
 export default IndexPage;
 
 export const head: DocumentHead = {
-  title: 'TODO Application',
+  title: 'mrclay.org',
   meta: [],
 };
